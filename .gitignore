@@ -1,0 +1,14 @@
+# Downloaded dataset (re-created automatically by cifar_data.load_cifar10)
+data/
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Model checkpoints (large; share via Drive instead)
+checkpoints/
+*.pt
+*.pth
