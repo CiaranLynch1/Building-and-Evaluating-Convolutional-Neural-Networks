@@ -138,12 +138,12 @@ def get_split(train_dataset, path=SPLIT_FILE, seed=SPLIT_SEED, val_fraction=VAL_
             "seed": seed, "val_fraction": val_fraction}
 
 
-def training_augmentation(padding=4, flip=True):
+def training_augmentation(padding=4, crop=True, flip=True):
     # for task 4 - random crop + horizontal flip.
     # no vertical flip since upside down horses/ships etc don't really make sense
-    steps = [T.RandomCrop(32, padding=padding, padding_mode="reflect")]
-    if flip:
-        steps.append(T.RandomHorizontalFlip(p=0.5))
+    steps = []
+    if crop: steps.append(T.RandomCrop(32, padding=padding, padding_mode="reflect"))
+    if flip: steps.append(T.RandomHorizontalFlip(p=0.5))
     return T.Compose(steps)
 
 
