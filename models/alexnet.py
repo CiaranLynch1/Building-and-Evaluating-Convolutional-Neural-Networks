@@ -1,3 +1,6 @@
+# The single-GPU AlexNet implementation was used as inspiration before adapting it for the A9 part
+# from the course material 
+# 
 import torch.nn as nn
 
 
