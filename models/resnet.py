@@ -1,3 +1,6 @@
+# ResNet18 from Scratch was used as inpiration before adapting it for A9 part from the course material
+# Link to geeksforgeeks: https://www.geeksforgeeks.org/deep-learning/resnet18-from-scratch-using-pytorch/
+#
 import torch.nn as nn
 
 
@@ -39,10 +42,8 @@ class BasicBlock(nn.Module):
         return out
 
 
-# For running the expirement in task3 
+# For running the expirement in task3
 class ResNet18(nn.Module):
-    # defaults = the A9 ResNet-18. width = channels in stage 1 (stages 2-4 use 2x, 4x, 8x),
-    # blocks = residual blocks per stage, e.g. [1,1,1,1] = ResNet-10, [3,4,6,3] = ResNet-34
     def __init__(self, num_classes=10, width=64, blocks=(2, 2, 2, 2)):
         super(ResNet18, self).__init__()
         self.in_channels = width
@@ -50,7 +51,7 @@ class ResNet18(nn.Module):
         self.bn1 = nn.BatchNorm2d(width)
         self.relu = nn.ReLU(inplace=True)
 
-        self.layer1 = self._make_layer(BasicBlock, width,     blocks[0], stride=1)
+        self.layer1 = self._make_layer(BasicBlock, width, blocks[0], stride=1)
         self.layer2 = self._make_layer(BasicBlock, 2 * width, blocks[1], stride=2)
         self.layer3 = self._make_layer(BasicBlock, 4 * width, blocks[2], stride=2)
         self.layer4 = self._make_layer(BasicBlock, 8 * width, blocks[3], stride=2)
@@ -65,24 +66,24 @@ class ResNet18(nn.Module):
             layers.append(block(self.in_channels, out_channels, stride))
             self.in_channels = out_channels
         return nn.Sequential(*layers)
-    
-    
-    def forward(self, x):
-            out = self.conv1(x)
-            out = self.bn1(out)
-            out = self.relu(out)
-    
-            out = self.layer1(out)
-            out = self.layer2(out)
-            out = self.layer3(out)
-            out = self.layer4(out)
-    
-            out = self.avgpool(out)
-            out = out.view(out.size(0), -1)
-            out = self.fc(out)
-            return out
 
-'''
+    def forward(self, x):
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+
+        out = self.layer1(out)
+        out = self.layer2(out)
+        out = self.layer3(out)
+        out = self.layer4(out)
+
+        out = self.avgpool(out)
+        out = out.view(out.size(0), -1)
+        out = self.fc(out)
+        return out
+
+
+"""
 class ResNet18(nn.Module):
     def __init__(self, num_classes=10):
         super(ResNet18, self).__init__()
@@ -121,4 +122,5 @@ class ResNet18(nn.Module):
         out = out.view(out.size(0), -1)
         out = self.fc(out)
         return out
-'''
+"""
+
